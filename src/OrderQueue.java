@@ -2,7 +2,6 @@ public class OrderQueue {
     private QueueNode front;
     private QueueNode rear;
     
-    // Custom queue implementation for orders
     private class QueueNode {
         Order order;
         QueueNode next;
@@ -27,12 +26,10 @@ public class OrderQueue {
     public void enqueue(Order order) {
         QueueNode newNode = new QueueNode(order);
         
-        // If queue is empty, both front and rear point to the new node
         if (isEmpty()) {
             front = newNode;
             rear = newNode;
         } else {
-            // Add the new node at the end of queue and change rear
             rear.next = newNode;
             rear = newNode;
         }
@@ -47,11 +44,9 @@ public class OrderQueue {
             return null;
         }
         
-        // Store the front and move front one node ahead
         QueueNode temp = front;
         front = front.next;
         
-        // If front becomes null, rear must also be null
         if (front == null) {
             rear = null;
         }

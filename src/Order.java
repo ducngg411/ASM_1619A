@@ -107,7 +107,7 @@ public class Order {
                 // Find the position to insert
                 OrderItemNode temp = sorted;
                 while (temp.next != null && 
-                       temp.next.item.getProduct().getName().compareTo(current.item.getProduct().getName()) < 0) {
+                        temp.next.item.getProduct().getName().compareTo(current.item.getProduct().getName()) < 0) {
                     temp = temp.next;
                 }
                 current.next = temp.next;

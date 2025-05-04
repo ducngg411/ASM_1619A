@@ -37,11 +37,12 @@ public class App {
         do{
             System.out.println("\n===== CUSTOMER MENU =====");
             System.out.println("1. View Products");
-            System.out.println("2. Place order");
-            System.out.println("3. View order history");
-            System.out.println("4. Track an order");
-            System.out.println("5. Update profile");
-            System.out.println("6. Logout");
+            System.out.println("2. Search Products");
+            System.out.println("3. Place order");
+            System.out.println("4. View order history");
+            System.out.println("5. Track an order");
+            System.out.println("6. Update profile");
+            System.out.println("7. Logout");
             System.out.println("0. Exit");
             System.out.print("Select an option: ");
             choice = getValidIntInput();
@@ -51,18 +52,21 @@ public class App {
                     viewProducts();
                     break;
                 case 2:
-                    placeOrder(customer);
+                    searchProducts();
                     break;
                 case 3:
-                    viewOrderHistory(customer);
+                    placeOrder(customer);
                     break;
                 case 4:
-                    trackOrder(customer);
+                    viewOrderHistory(customer);
                     break;
                 case 5:
-                    updateProfile(customer);
+                    trackOrder(customer);
                     break;
                 case 6:
+                    updateProfile(customer);
+                    break;
+                case 7:
                     System.out.println("Logging out " + customer.getName() + "...");
                     System.out.println("Logged out successfully.");
                     return true; 
@@ -72,7 +76,7 @@ public class App {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        } while(choice != 0 && choice != 6);
+        } while(choice != 0 && choice != 7);
         
         return false; 
     }
@@ -83,13 +87,14 @@ public class App {
         do {
             System.out.println("\n===== ADMIN MENU =====");
             System.out.println("1. View Products");
-            System.out.println("2. View Users");
-            System.out.println("3. Add New Product");
-            System.out.println("4. Update Product");
-            System.out.println("5. Remove Product");
-            System.out.println("6. View Orders in Queue");
-            System.out.println("7. Process Orders");
-            System.out.println("8. Logout");
+            System.out.println("2. Search Products");
+            System.out.println("3. View Users");
+            System.out.println("4. Add New Product");
+            System.out.println("5. Update Product");
+            System.out.println("6. Remove Product");
+            System.out.println("7. View Orders in Queue");
+            System.out.println("8. Process Orders");
+            System.out.println("9. Logout");
             System.out.println("0. Exit");
             System.out.print("Select an option: ");
             choice = getValidIntInput();
@@ -98,24 +103,27 @@ public class App {
                     viewProducts();
                     break;
                 case 2:
-                    viewAllUsers();
+                    searchProducts();
                     break;
                 case 3:
-                    addNewProduct();
+                    viewAllUsers();
                     break;
                 case 4:
-                    updateProduct();
+                    addNewProduct();
                     break;
                 case 5:
-                    removeProduct();
+                    updateProduct();
                     break;
                 case 6:
-                    viewOrdersInQueue();
+                    removeProduct();
                     break;
                 case 7:
-                    processOrders();
+                    viewOrdersInQueue();
                     break;
                 case 8:
+                    processOrders();
+                    break;
+                case 9:
                     System.out.println("Logging out " + admin.getName() + "...");
                     System.out.println("Logged out successfully.");
                     return true;
@@ -125,7 +133,7 @@ public class App {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        } while (choice != 0 && choice != 8);
+        } while (choice != 0 && choice != 9);
         
         return false; 
     }
@@ -154,6 +162,31 @@ public class App {
         }
         
         for (Product product : products) {
+            System.out.println(product);
+        }
+    }
+    
+    private static void searchProducts() {
+        System.out.println("\n===== SEARCH PRODUCTS =====");
+        System.out.print("Enter search keyword (title, author, or description): ");
+        String keyword = scanner.nextLine().trim();
+        
+        if (keyword.isEmpty()) {
+            System.out.println("Search keyword cannot be empty.");
+            return;
+        }
+        
+        Product[] results = productManager.searchProducts(keyword);
+        
+        if (results.length == 0) {
+            System.out.println("No products found matching '" + keyword + "'.");
+            return;
+        }
+        
+        System.out.println("\nSearch results for '" + keyword + "':");
+        System.out.println("Found " + results.length + " product(s):\n");
+        
+        for (Product product : results) {
             System.out.println(product);
         }
     }

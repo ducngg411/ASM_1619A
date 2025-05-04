@@ -125,5 +125,44 @@ public class ProductManager {
         return false; 
     }
 
-
+    // Search products by name or author
+    public Product[] searchProducts(String keyword) {
+        if (head == null || keyword == null || keyword.trim().isEmpty()) {
+            return new Product[0];
+        }
+        
+        keyword = keyword.toLowerCase().trim();
+        
+        // First, count matching products
+        int count = 0;
+        ProductNode current = head;
+        while (current != null) {
+            if (current.product.getName().toLowerCase().contains(keyword) || 
+                current.product.getAuthor().toLowerCase().contains(keyword) ||
+                current.product.getDescription().toLowerCase().contains(keyword)) {
+                count++;
+            }
+            current = current.next;
+        }
+        
+        if (count == 0) {
+            return new Product[0];
+        }
+        
+        // Create array and populate with matching products
+        Product[] results = new Product[count];
+        current = head;
+        int index = 0;
+        
+        while (current != null) {
+            if (current.product.getName().toLowerCase().contains(keyword) || 
+                current.product.getAuthor().toLowerCase().contains(keyword) ||
+                current.product.getDescription().toLowerCase().contains(keyword)) {
+                results[index++] = current.product;
+            }
+            current = current.next;
+        }
+        
+        return results;
+    }
 }
